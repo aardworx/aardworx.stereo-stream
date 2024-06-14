@@ -13,6 +13,11 @@ const renderBufferA = new THREE.WebGLRenderTarget(
   height
 ) 
 
+const renderBufferB = new THREE.WebGLRenderTarget(
+  width,
+  height
+) 
+
 // Create a threejs renderer:
 // 1. Size it correctly
 // 2. Set default background color
@@ -49,23 +54,24 @@ exampleSocket.onmessage = (event) => {
  
 function onAnimLoop() {
 	
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
-  
+  cube.rotation.x += 0.001;
+  cube.rotation.y += 0.001;
+  cube.material.color.setHex(0x00ff00);
   renderer.setRenderTarget(null)
   renderer.render(scene, camera)
   
   renderer.setRenderTarget(renderBufferA)
-  camera.x = 0.2;
+  camera.position.x = -0.5;
   renderer.render(scene, camera)
   const a = new Uint8Array(width*height*4);
   renderer.readRenderTargetPixels(renderBufferA, 0, 0, width, height, a, 0)
 
-  renderer.setRenderTarget(renderBufferA)
-  camera.x = -0.2;
+  renderer.setRenderTarget(renderBufferB)
+  camera.position.x = 0.5;
+  //cube.material.color.setHex(0xff0000);
   renderer.render(scene, camera)
   const b = new Uint8Array(width*height*4); 
-  renderer.readRenderTargetPixels(renderBufferA, 0, 0, width, height, b, 0)
+  renderer.readRenderTargetPixels(renderBufferB, 0, 0, width, height, b, 0)
   
   if(exampleSocket.readyState !== WebSocket.CLOSED && sendNext) {
 	  try {

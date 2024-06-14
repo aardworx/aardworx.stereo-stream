@@ -48,15 +48,18 @@ module Shader =
             if layer() = 0 then
                 return leftSampler.Sample(v.tc)
             else
+               // return V4d.IOOI 
                 return rightSampler.Sample(v.tc)
         }
 
 
     let test (v : Vertex) =
         fragment {
-            if uniform?Index = 0 then
+            let u:int=uniform?Index
+            if u = 0 then
                 return leftSampler.Sample(v.tc)
-            else
+            else    
+                //return V4d.IOOI 
                 return rightSampler.Sample(v.tc)
         }
 
@@ -71,8 +74,8 @@ module Main =
 
         let dbg = Aardvark.Rendering.GL.DebugConfig.Normal
         let windowInterop = StereoExperimental.stereo dbg
-        //use app = new OpenGlApplication(dbg, windowInterop, None, false)
-        use app = new OpenGlApplication()
+        use app = new OpenGlApplication(dbg, windowInterop, None, false)
+        //use app = new OpenGlApplication()
         let win = app.CreateGameWindow({ WindowConfig.Default with samples = 8; width = 400; height= 400 })
         win.Title <- "Quadbuffer Stereo. Use mouse to Rotate."
         //win.Cursor <- Cursor.None
@@ -87,13 +90,15 @@ module Main =
             let bytes = size.X * size.Y * 4
             let read = data.Read(l.Array |> unbox<byte[]>, 0, bytes)
             if read <> bytes then Log.warn "strange"
-            PixTexture2d(l)
-
+            l
+            
         let gotImage (img : WebServer.StereoImage) = 
             task {
-                transact (fun _ -> 
-                    //left.Value <- bytesToImage img.size img.left
-                    //right.Value <- bytesToImage img.size img.left
+                transact (fun _ ->
+                    let l =  bytesToImage img.size img.left 
+                    left.Value <- PixTexture2d(l)
+                    let r = bytesToImage img.size img.right
+                    right.Value <- PixTexture2d(r)
                     ()
                 )
             } :> Task
@@ -106,6 +111,7 @@ module Main =
         win.Keyboard.KeyDown(Keys.L).Values.Add(fun _ -> 
             transact (fun _ -> 
                 index.Value <- (index.Value + 1) % 2
+                Log.line "%A" index.Value
             )
         ) |> ignore
 
@@ -115,8 +121,8 @@ module Main =
             |> Sg.texture "RightTexture" right
             |> Sg.uniform "Index" index
             |> Sg.shader {
-                //do! Shader.applyLeftRight
-                do! Shader.test
+                do! Shader.applyLeftRight
+                //do! Shader.test
             }
 
         // assign the render task to our window...
