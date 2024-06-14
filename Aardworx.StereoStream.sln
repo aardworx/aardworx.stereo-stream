@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Aardworx.StereoStream", "src\Aardworx.StereoStream\Aardworx.StereoStream.fsproj", "{6B5FB458-46A8-4E4F-824C-FA1C025B7589}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{95B2F71E-097F-424D-96C9-7B3746C8DBA4}"
+	ProjectSection(SolutionItems) = preProject
+		paket.dependencies = paket.dependencies
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B5FB458-46A8-4E4F-824C-FA1C025B7589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B5FB458-46A8-4E4F-824C-FA1C025B7589}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B5FB458-46A8-4E4F-824C-FA1C025B7589}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B5FB458-46A8-4E4F-824C-FA1C025B7589}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C3D8E602-5C9D-4FEA-8044-D6A2F24E6701}
+	EndGlobalSection
+EndGlobal
