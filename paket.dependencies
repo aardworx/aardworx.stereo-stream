@@ -20,3 +20,5 @@ nuget Aardvark.Application.Slim.Vulkan      == 5.4.9-prerelease0001
 
 
 nuget Giraffe ~> 6.4.0
+
+nuget Aardvark.PixImage.DevIL
